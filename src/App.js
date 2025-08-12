@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Home from "./components/Home";
+import LoginRegister from "./components/LoginRegister";
+import ProfileForm from "./components/ProfileForm";
+import ProfileView from "./components/ProfileView";
+import Dashboard from "./components/Dashboard";
+import QRGenerator from "./components/QRGenerator";
+import HospitalLogin from "./components/HospitalLogin";
+import ScanQR from "./components/ScanQR";
+import FundRequest from "./components/FundRequest";
+import "./App.css";
 
-function App() {
+export default function App() {
+  const [page, setPage] = useState("home");
+  const [user, setUser] = useState(null);
+
+  const navigate = (p) => setPage(p);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {page === "home" && <Home navigate={navigate} />}
+      {page === "login" && <LoginRegister navigate={navigate} setUser={setUser} />}
+      {page === "profileForm" && <ProfileForm user={user} navigate={navigate} />}
+      {page === "profileView" && <ProfileView user={user} navigate={navigate} />}
+      {page === "dashboard" && user && <Dashboard user={user} navigate={navigate} />}
+      {page === "qrGenerator" && user && <QRGenerator user={user} navigate={navigate} />}
+      {page === "hospitalLogin" && <HospitalLogin navigate={navigate} />}
+      {page === "scanQR" && <ScanQR navigate={navigate} />}
+      {page === "fundRequest" && <FundRequest navigate={navigate} />}
+    </>
   );
 }
-
-export default App;
